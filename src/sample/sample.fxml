@@ -38,7 +38,7 @@
          <children>
             <Label text="Tom" />
             <Label text="Vie" />
-            <ProgressBar prefWidth="200.0" progress="1.0">
+            <ProgressBar prefWidth="200.0" progress="1.0" rotate="180.0">
                <effect>
                   <ColorAdjust contrast="1.0" hue="1.0" />
                </effect></ProgressBar>
