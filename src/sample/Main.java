@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import modele.Personnage;
 
 public class Main extends Application {
 
@@ -16,6 +18,23 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
+        Personnage personnage = new Personnage();
+        root.setOnKeyPressed(event -> {
+            if (event.getCode()== KeyCode.A){
+                personnage.setAPressed(true);
+            }
+            if (event.getCode() == KeyCode.D){
+                personnage.setDPressed(true);
+            }
+        });
+        root.setOnKeyReleased(event -> {
+            if (event.getCode()== KeyCode.A){
+                personnage.setAPressed(false);
+            }
+            if (event.getCode() == KeyCode.D){
+                personnage.setDPressed(false);
+            }
+        });
     }
 
 
