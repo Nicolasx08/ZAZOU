@@ -13,8 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("ZAZOU");
+        primaryStage.setTitle("Zazou");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
         Personnage personnage = new Personnage();
         root.setOnKeyPressed(event -> {
