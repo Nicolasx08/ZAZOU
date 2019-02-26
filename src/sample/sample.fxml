@@ -7,6 +7,7 @@
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -14,8 +15,11 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <ImageView fx:id="imageBackground" fitHeight="383.0" fitWidth="715.0" pickOnBounds="true" />
-      <BorderPane fx:id="bpPerso" prefHeight="200.0" prefWidth="200.0" />
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1900.0">
+      <BorderPane fx:id="bpPerso" prefHeight="200.0" prefWidth="200.0">
+         <center>
+              <Circle fx:id="ball" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" BorderPane.alignment="BOTTOM_LEFT" />
+         </center></BorderPane>
+      <BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1900.0">
          <left>
             <VBox fx:id="vb1" prefHeight="200.0" prefWidth="100.0" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
                <children>
@@ -53,56 +57,15 @@
          <center>
             <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" text="Start" BorderPane.alignment="CENTER" />
          </center>
-         <top>
-            <Button fx:id="butFDT" mnemonicParsing="false" onAction="#finDeTour" text="Fin de tour" visible="false" BorderPane.alignment="CENTER" />
-         </top>
+          <bottom>
+            <HBox spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
+               <children>
+                    <Button fx:id="butLance" mnemonicParsing="false" onAction="#lancer" text="lance" visible="false" />
+                  <Button fx:id="butFDT" mnemonicParsing="false" onAction="#finDeTour" text="Fin de tour" visible="false" />
+
+               </children>
+            </HBox>
+          </bottom>
       </BorderPane>
    </children>
 </StackPane>
-<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <top>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="ZAZOU!!" />
-         </children>
-      </HBox>
-   </top>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Bob" />
-            <Label text="Vie" />
-            <ProgressBar prefWidth="200.0" progress="1.0">
-               <effect>
-                  <ColorAdjust contrast="1.0" hue="1.0" />
-               </effect></ProgressBar>
-            <Button mnemonicParsing="false" text="Projectiles" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </BorderPane.margin>
-      </VBox>
-   </left>
-   <right>
-      <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Tom" />
-            <Label text="Vie" />
-            <ProgressBar prefWidth="200.0" progress="1.0" rotate="180.0">
-               <effect>
-                  <ColorAdjust contrast="1.0" hue="1.0" />
-               </effect></ProgressBar>
-            <Button mnemonicParsing="false" text="Projectiles" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </BorderPane.margin>
-      </VBox>
-   </right>
-   <bottom>
-      <Button mnemonicParsing="false" onAction="#lancer" text="lance" BorderPane.alignment="CENTER" />
-   </bottom>
-   <center>
-      <Circle fx:id="ball" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="BOTTOM_LEFT" />
-   </center>
-</BorderPane>

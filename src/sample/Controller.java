@@ -40,6 +40,10 @@ public class Controller {
     public VBox vb2;
     @FXML
     public Button butFDT;
+    @FXML
+    public Circle ball;
+    @FXML
+    public Button butLance;
 
     public void demarrage(){
         javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundAnimeWithCactusBon.gif").toExternalForm());
@@ -73,8 +77,9 @@ public class Controller {
         vb2.setVisible(true);
         vb2.setTranslateY(75);
         butFDT.setVisible(true);
-        butFDT.setTranslateX(-25);
-        butFDT.setTranslateY(1000);
+        ball.setVisible(true);
+        butLance.setVisible(true);
+
     }
     public void deplacerGaucheEtDroite(Personnage personne){
         final Timeline timeline = new Timeline();
@@ -126,13 +131,8 @@ public class Controller {
             Main.tour=0;
         }
     }
-
     //code inspiration
     //https://stackoverflow.com/questions/21783858/how-to-code-the-projectile-of-a-ball-of-different-force-and-angle-in-java-swing
-    @FXML
-    public BorderPane bPane;
-    @FXML
-    public Circle ball;
     @FXML
     public void lancer(){
         double vitesse =150;
