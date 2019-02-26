@@ -54,6 +54,6 @@
       <Button mnemonicParsing="false" onAction="#lancer" text="lance" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <Circle fx:id="ball" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+      <Circle fx:id="ball" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="BOTTOM_LEFT" />
    </center>
 </BorderPane>
