@@ -125,6 +125,7 @@ public class Controller {
 
     }
     public void finDeTour(){
+
         if (Main.tour==0){
             Main.tour=1;
         }else {
@@ -135,13 +136,14 @@ public class Controller {
     //https://stackoverflow.com/questions/21783858/how-to-code-the-projectile-of-a-ball-of-different-force-and-angle-in-java-swing
     @FXML
     public void lancer(){
-        double vitesse =150;
-        double angle=20;
+        double vitesse =90;
+        double angle=50;
         int[] counter={0};
         angle=angle*0.0174533;
         double vitesseX=vitesse*(double)(Math.cos(angle));
         double vitesseYIni=vitesse*(double)(Math.sin(angle));
-        double gravite=-9.8;
+        double gravite=-14.8;
+        AtomicInteger leftRight=new AtomicInteger(0);
 
         SimpleDoubleProperty stepX=new SimpleDoubleProperty(0);
         SimpleDoubleProperty stepY=new SimpleDoubleProperty(0);
@@ -150,21 +152,36 @@ public class Controller {
         SimpleDoubleProperty lastPosX=new SimpleDoubleProperty(0);
         SimpleDoubleProperty lastPosY=new SimpleDoubleProperty(0);
 
+        if (Main.tour==0){
+            ball.setCenterX(bpPerso.getLeft().getTranslateX()-325);
+            ball.setCenterY(bpPerso.getLeft().getTranslateY()-730);
+            leftRight.set(1);
+        }
+        if (Main.tour==1){
+            ball.setCenterX(bpPerso.getRight().getTranslateX()+1305);
+            ball.setCenterY(bpPerso.getRight().getTranslateY()-1042);
+            leftRight.set(-1);
+        }
         final Timeline timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setAutoReverse(false);
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1),event -> {
+
+
             posX.set(vitesseX*(counter[0]*0.004));
             posY.set((vitesseYIni*(counter[0]*0.004))+((gravite*(counter[0]*0.004)*(counter[0]*0.004))/2));
             stepX.set((posX.get()- lastPosX.get()));
             stepY.set(posY.get()-lastPosY.get());
             lastPosX.set(posX.get());
             lastPosY.set(posY.get());
-            ball.setTranslateX(ball.getCenterX()+(stepX.get()));
-            ball.setCenterX(ball.getCenterX()+(stepX.get()));
+            ball.setTranslateX(ball.getCenterX()+leftRight.get()*(stepX.get()));
+            ball.setCenterX(ball.getCenterX()+leftRight.get()*(stepX.get()));
             ball.setTranslateY(ball.getCenterY()-(stepY.get()));
             ball.setCenterY(ball.getCenterY()-(stepY.get()));
             counter[0]++;
+            if (ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-695){
+                timeline.stop();
+            }
 
         }));
         timeline.play();
