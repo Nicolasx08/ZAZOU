@@ -4,7 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -13,19 +12,8 @@ import modele.Personnage;
 
 
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class Controller {
     @FXML
@@ -46,31 +34,29 @@ public class Controller {
     public Button butLance;
 
     public void demarrage(){
-        javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundAnimeWithCactusBon.gif").toExternalForm());
+        javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundAnimeWithCactus3fps.gif").toExternalForm());
         imageBackground.setImage(image);
         imageBackground.setFitHeight(1100);
         imageBackground.setFitWidth(1900);
-        Personnage personnage = new Personnage();
         javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
-        personnage.setApparence(image1);
-        ImageView imageView = new ImageView(personnage.getApparence());
-        personnage.setApparenceVue(imageView);
-        personnage.getApparenceVue().setId("x");
-        bpPerso.setLeft(personnage.getApparenceVue());
+        Main.personnage.setApparence(image1);
+        ImageView imageView = new ImageView(Main.personnage.getApparence());
+        Main.personnage.setApparenceVue(imageView);
+        bpPerso.setLeft(Main.personnage.getApparenceVue());
         bpPerso.getLeft().setScaleX(0.2);
         bpPerso.getLeft().setScaleY(0.2);
         bpPerso.getLeft().setTranslateY(563);
-        personnage.setPosition(bpPerso.getLeft().getTranslateX());
-        Personnage personnage1 = new Personnage();
+        Main.personnage.setPosition(bpPerso.getLeft().getTranslateX());
         javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("photo.png").toExternalForm());
-        personnage1.setApparence(image2);
-        ImageView imageView1 = new ImageView(personnage1.getApparence());
-        personnage1.setApparenceVue(imageView1);
-        personnage1.getApparenceVue().setId("o");
-        bpPerso.setRight(personnage1.getApparenceVue());
+        Main.personnage1.setApparence(image2);
+        ImageView imageView1 = new ImageView(Main.personnage1.getApparence());
+        Main.personnage1.setApparenceVue(imageView1);
+        bpPerso.setRight(Main.personnage1.getApparenceVue());
         bpPerso.getRight().setScaleX(5);
         bpPerso.getRight().setScaleY(5);
         bpPerso.getRight().setTranslateY(875);
+        bpPerso.getRight().setTranslateX(-200);
+        Main.personnage1.setPosition(-200);
         butDemarrage.setVisible(false);
         vb1.setVisible(true);
         vb1.setTranslateY(75);
@@ -87,14 +73,18 @@ public class Controller {
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), even -> {
                 if (Main.tour ==0){
                     if (personne.getPosition()>= -250){
-                        personne.setPosition(personne.getPosition()-3);
+                        personne.setPosition(personne.getPosition()-5);
                         bpPerso.getLeft().setTranslateX(personne.getPosition());
+                        //personne.setApparence(gif animation);
+                        //personne.setApparenceVue(personne.getApparence());
                     }
                 }
                 if (Main.tour==1){
                     if (personne.getPosition()>=-550){
-                        personne.setPosition(personne.getPosition()-3);
+                        personne.setPosition(personne.getPosition()-5);
                         bpPerso.getRight().setTranslateX(personne.getPosition());
+                        //personne.setApparence(gif animation);
+                        //personne.setApparenceVue(personne.getApparence());
                     }
                 }
 
@@ -108,12 +98,16 @@ public class Controller {
                     if (personne.getPosition()<=310){
                         personne.setPosition(personne.getPosition()+3);
                         bpPerso.getLeft().setTranslateX(personne.getPosition());
+                        //personne.setApparence(gif animation);
+                        //personne.setApparenceVue(personne.getApparence());
                     }
                 }
                 if (Main.tour==1){
                     if (personne.getPosition()<=-30){
                         personne.setPosition(personne.getPosition()+3);
                         bpPerso.getRight().setTranslateX(personne.getPosition());
+                        //personne.setApparence(gif animation);
+                        //personne.setApparenceVue(personne.getApparence());
                     }
                 }
 
@@ -121,6 +115,20 @@ public class Controller {
             }));
             timeline.play();
         }
+        /*if (!personne.isDPressed()){
+            if (Main.tour==0){
+                javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
+                personne.setApparence(image1);
+                ImageView imageView = new ImageView(personne.getApparence());
+                personne.setApparenceVue(imageView);
+            }
+            if (Main.tour==1){
+                javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource().toExternalForm());
+                personne.setApparence(image2);
+                ImageView imageView = new ImageView(personne.getApparence());
+                personne.setApparenceVue(imageView);
+            }
+        }*/
 
 
     }
@@ -134,6 +142,7 @@ public class Controller {
     }
     //code inspiration
     //https://stackoverflow.com/questions/21783858/how-to-code-the-projectile-of-a-ball-of-different-force-and-angle-in-java-swing
+    //set deplacement de personne false quand on lance
     @FXML
     public void lancer(){
         double vitesse =90;
