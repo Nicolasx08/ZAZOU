@@ -4,18 +4,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import modele.Personnage;
 
-import javax.naming.ldap.Control;
-
 public class Main extends Application {
     public static int tour = 0;
+    public  static Personnage personnage = new Personnage();
+    public static Personnage personnage1 = new Personnage();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader();
@@ -26,8 +23,6 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
-        Personnage personnage = new Personnage();
-        Personnage personnage1 = new Personnage();
         root.setOnKeyPressed(event -> {
             if (event.getCode()== KeyCode.A){
                 if (tour==0){
