@@ -15,6 +15,8 @@ import javafx.animation.Animation;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Circle;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Controller {
     @FXML
     public ImageView imageBackground;
