@@ -17,7 +17,7 @@
       <ImageView fx:id="imageBackground" fitHeight="383.0" fitWidth="715.0" pickOnBounds="true" />
       <BorderPane fx:id="bpPerso" prefHeight="200.0" prefWidth="200.0">
          <center>
-              <Circle fx:id="ball" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" BorderPane.alignment="BOTTOM_LEFT" />
+              <Circle fx:id="ball" fill="DODGERBLUE" radius="10.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" BorderPane.alignment="BOTTOM_LEFT" />
          </center></BorderPane>
       <BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1900.0">
          <left>
@@ -25,7 +25,7 @@
                <children>
                   <Label text="Bob" />
                   <Label text="Vie" />
-                  <ProgressBar prefWidth="200.0" progress="1.0">
+                  <ProgressBar fx:id="viePerso" prefWidth="200.0" progress="1.0">
                      <effect>
                         <ColorAdjust contrast="1.0" hue="1.0" />
                      </effect>
@@ -42,7 +42,7 @@
                <children>
                   <Label text="Tom" />
                   <Label text="Vie" />
-                  <ProgressBar prefWidth="200.0" progress="1.0">
+                  <ProgressBar fx:id="viePerso1" prefWidth="200.0" progress="1.0">
                      <effect>
                         <ColorAdjust contrast="1.0" hue="1.0" />
                      </effect>
