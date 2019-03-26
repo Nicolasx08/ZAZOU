@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
@@ -46,6 +47,11 @@ public class Controller {
     public ProgressBar viePerso;
     @FXML
     public ProgressBar viePerso1;
+    @FXML
+    public Label PDV1;
+    @FXML
+    public Label PDV2;
+
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
 
@@ -91,6 +97,7 @@ public class Controller {
     public void deplacerGaucheEtDroite(Personnage personne){
         final Timeline timeline = new Timeline();
         if (personne.isAPressed()){
+            butFDT.setVisible(false);
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), even -> {
                 if (Main.tour ==0){
                     if (personne.getPosition()>= -250){
@@ -116,6 +123,7 @@ public class Controller {
             timeline.play();
         }
         if (personne.isDPressed()){
+            butFDT.setVisible(false);
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), even -> {
                 if (Main.tour==0){
                     if (personne.getPosition()<=310){
@@ -141,6 +149,22 @@ public class Controller {
             timeline.play();
         }
         /*if (!personne.isDPressed()){
+            butFDT.setVisible(true);
+            if (Main.tour==0){
+                javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
+                personne.setApparence(image1);
+                ImageView imageView = new ImageView(personne.getApparence());
+                personne.setApparenceVue(imageView);
+            }
+            if (Main.tour==1){
+                javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource().toExternalForm());
+                personne.setApparence(image2);
+                ImageView imageView = new ImageView(personne.getApparence());
+                personne.setApparenceVue(imageView);
+            }
+        }*/
+        /*if (!personne.isAPressed()){
+            butFDT.setVisible(true);
             if (Main.tour==0){
                 javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
                 personne.setApparence(image1);
@@ -166,8 +190,7 @@ public class Controller {
             Main.tour=0;
         }
     }
-    //code inspiration
-    //https://stackoverflow.com/questions/21783858/how-to-code-the-projectile-of-a-ball-of-different-force-and-angle-in-java-swing
+
     @FXML
     public void lancer(){
         butLance.setVisible(false);
@@ -219,7 +242,8 @@ public class Controller {
             }
             if (Main.tour==0 && (ball.getCenterX()>= Main.personnage1.getPosition()+1140-rectanglePerso2.getWidth())&& (ball.getCenterX()<= Main.personnage1.getPosition()+1140)&& ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-787){
                 timeline.stop();
-                Main.personnage1.setVie(Main.personnage1.getVie()+15+((int)(((bpPerso.getLeft().getTranslateY()-730)+((ball.getCenterY())/10)))));
+                Main.personnage1.setVie(Main.personnage1.getVie()-(int)(((128-ball.getCenterY())/10)*(ball.getRadius()/40)));
+                PDV2.setText(Main.personnage1.getVie()+"/100");
                 if(Main.personnage1.getVie()<0){
                     Main.personnage1.setVie(0);
                 }
@@ -235,7 +259,8 @@ public class Controller {
             }
             if (Main.tour==1 && (ball.getCenterX()>= Main.personnage.getPosition()-294-rectanglePerso1.getWidth())&& (ball.getCenterX()<= Main.personnage.getPosition()-290)&& ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-800){
                 timeline.stop();
-                Main.personnage.setVie(Main.personnage.getVie()+15+((int)(((bpPerso.getRight().getTranslateY()-730)+ball.getCenterY())/10)));
+                Main.personnage.setVie(Main.personnage.getVie()-(int)(((128-ball.getCenterY())/10)*(ball.getRadius()/40)));
+                PDV1.setText(Main.personnage.getVie()+"/100");
                 if(Main.personnage.getVie()<0){
                     Main.personnage.setVie(0);
                 }
