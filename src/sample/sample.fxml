@@ -62,7 +62,6 @@
           <bottom>
             <HBox spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
                <children>
-                    <Button fx:id="butLance" mnemonicParsing="false" onAction="#lancer" text="lance" visible="false" />
                   <Button fx:id="butFDT" mnemonicParsing="false" onAction="#finDeTour" text="Fin de tour" visible="false" />
 
                </children>

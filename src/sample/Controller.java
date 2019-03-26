@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import modele.Personnage;
@@ -40,8 +41,6 @@ public class Controller {
     @FXML
     public Circle ball;
     @FXML
-    public Button butLance;
-    @FXML
     public BorderPane bPane;
     @FXML
     public ProgressBar viePerso;
@@ -54,12 +53,17 @@ public class Controller {
 
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
+    public static AtomicInteger angle = new AtomicInteger();
+    public static AtomicInteger vitesseIni = new AtomicInteger();
+
+
 
     public void demarrage(){
         javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundAnimeWithCactus3fps.gif").toExternalForm());
         imageBackground.setImage(image);
         imageBackground.setFitHeight(1100);
         imageBackground.setFitWidth(1900);
+
         javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
         Main.personnage.setApparence(image1);
         ImageView imageView = new ImageView(Main.personnage.getApparence());
@@ -69,6 +73,7 @@ public class Controller {
         bpPerso.getLeft().setScaleY(0.2);
         bpPerso.getLeft().setTranslateY(563);
         Main.personnage.setPosition(bpPerso.getLeft().getTranslateX());
+
         javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("samourai_David.png").toExternalForm());
         Main.personnage1.setApparence(image2);
         ImageView imageView1 = new ImageView(Main.personnage1.getApparence());
@@ -79,25 +84,40 @@ public class Controller {
         bpPerso.getRight().setTranslateY(680);
         bpPerso.getRight().setTranslateX(-45);
         Main.personnage1.setPosition(-45);
+
         butDemarrage.setVisible(false);
         vb1.setVisible(true);
         vb1.setTranslateY(75);
         vb2.setVisible(true);
         vb2.setTranslateY(75);
         ball.setVisible(true);
+
         javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResource("caillou.png").toExternalForm());
         ball.setFill(new ImagePattern(image3));
-        butLance.setVisible(true);
+
         rectanglePerso1.setOpacity(0);
         bPane.getChildren().add(rectanglePerso1);
         rectanglePerso2.setOpacity(0);
         bPane.getChildren().add(rectanglePerso2);
 
+        Line ligne = new Line();
+        rectanglePerso1.setOnMousePressed(event -> {
+            ligne.setStartX(event.getSceneX());
+            ligne.setStartY(event.getSceneY());
+        });
+
+        bPane.setOnMouseReleased(event -> {
+            ligne.setEndX(event.getSceneX());
+            ligne.setEndY(event.getSceneY());
+            vitesseIni.set((int)(Math.sqrt(Math.pow((ligne.getEndX()-ligne.getStartX()),2)+Math.pow((ligne.getEndY()-ligne.getStartY()),2))));
+            angle.set((int)Math.toDegrees(Math.asin((ligne.getEndY()-ligne.getStartY())/(vitesseIni.get()))));
+            lancer();
+
+        });
     }
     public void deplacerGaucheEtDroite(Personnage personne){
         final Timeline timeline = new Timeline();
         if (personne.isAPressed()){
-            butFDT.setVisible(false);
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), even -> {
                 if (Main.tour ==0){
                     if (personne.getPosition()>= -250){
@@ -123,15 +143,12 @@ public class Controller {
             timeline.play();
         }
         if (personne.isDPressed()){
-            butFDT.setVisible(false);
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), even -> {
                 if (Main.tour==0){
                     if (personne.getPosition()<=310){
                         personne.setPosition(personne.getPosition()+5);
                         bPane.getChildren().get(4).setTranslateX(bPane.getChildren().get(4).getTranslateX()+5);
                         bpPerso.getLeft().setTranslateX(personne.getPosition());
-                        //personne.setApparence(gif animation);
-                        //personne.setApparenceVue(personne.getApparence());
                     }
                 }
                 if (Main.tour==1){
@@ -143,13 +160,11 @@ public class Controller {
                         //personne.setApparenceVue(personne.getApparence());
                     }
                 }
-
-
             }));
             timeline.play();
+
         }
         /*if (!personne.isDPressed()){
-            butFDT.setVisible(true);
             if (Main.tour==0){
                 javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
                 personne.setApparence(image1);
@@ -157,25 +172,16 @@ public class Controller {
                 personne.setApparenceVue(imageView);
             }
             if (Main.tour==1){
-                javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource().toExternalForm());
+                javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("samourai_David.png").toExternalForm());
                 personne.setApparence(image2);
                 ImageView imageView = new ImageView(personne.getApparence());
                 personne.setApparenceVue(imageView);
             }
-        }*/
-        /*if (!personne.isAPressed()){
-            butFDT.setVisible(true);
+        }
+        if (!personne.isAPressed()){
             if (Main.tour==0){
-                javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
-                personne.setApparence(image1);
-                ImageView imageView = new ImageView(personne.getApparence());
-                personne.setApparenceVue(imageView);
             }
             if (Main.tour==1){
-                javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource().toExternalForm());
-                personne.setApparence(image2);
-                ImageView imageView = new ImageView(personne.getApparence());
-                personne.setApparenceVue(imageView);
             }
         }*/
 
@@ -183,7 +189,6 @@ public class Controller {
     }
     public void finDeTour(){
         butFDT.setVisible(false);
-        butLance.setVisible(true);
         if (Main.tour==0){
             Main.tour=1;
         }else {
@@ -193,13 +198,12 @@ public class Controller {
 
     @FXML
     public void lancer(){
-        butLance.setVisible(false);
-        double vitesse =150;
-        double angle=35;
+        double vitesse =vitesseIni.get();
+        double angle2=angle.get();
         int[] counter={0};
-        angle=angle*0.0174533;
-        double vitesseX=vitesse*(double)(Math.cos(angle));
-        double vitesseYIni=vitesse*(double)(Math.sin(angle));
+        angle2=angle2*0.0174533;
+        double vitesseX=vitesse*(double)(Math.cos(angle2));
+        double vitesseYIni=vitesse*(double)(Math.sin(angle2));
         double gravite=-20;
         AtomicInteger leftRight=new AtomicInteger(0);
 
