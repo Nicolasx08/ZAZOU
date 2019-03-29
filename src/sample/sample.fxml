@@ -11,8 +11,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <ImageView fx:id="imageBackground" fitHeight="383.0" fitWidth="715.0" pickOnBounds="true" />
       <BorderPane fx:id="bpPerso" prefHeight="200.0" prefWidth="200.0">
@@ -32,6 +33,16 @@
                      </effect>
                   </ProgressBar>
                   <Button mnemonicParsing="false" text="Projectiles" />
+                  <Label fx:id="vitDonnee1" text="Vitesse initiale : ">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="angleDonnee1" text="Angle : ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -50,6 +61,16 @@
                      </effect>
                   </ProgressBar>
                   <Button mnemonicParsing="false" text="Projectiles" />
+                  <Label fx:id="vitDonnee2" text="Vitesse Initiale : ">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="angleDonnee2" text="Angle : ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
