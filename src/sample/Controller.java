@@ -74,8 +74,6 @@ public class Controller {
     public static Boolean checkClick=false;
     public static Boolean lancerDone=false;
     public static Line ligne = new Line();
-
-
     public static AtomicInteger nombre = new AtomicInteger();
 
     public void demarrage(){
