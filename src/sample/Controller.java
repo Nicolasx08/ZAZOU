@@ -50,11 +50,21 @@ public class Controller {
     public Label PDV1;
     @FXML
     public Label PDV2;
-
+    @FXML
+    public Label vitDonnee1;
+    @FXML
+    public Label angleDonnee1;
+    @FXML
+    public Label vitDonnee2;
+    @FXML
+    public Label angleDonnee2;
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
     public static AtomicInteger angle = new AtomicInteger();
     public static AtomicInteger vitesseIni = new AtomicInteger();
+    public static Boolean checkClick=false;
+    public static Boolean lancerDone=false;
+    public static Line ligne = new Line();
 
 
 
@@ -100,18 +110,43 @@ public class Controller {
         rectanglePerso2.setOpacity(0);
         bPane.getChildren().add(rectanglePerso2);
 
-        Line ligne = new Line();
-        rectanglePerso1.setOnMousePressed(event -> {
-            ligne.setStartX(event.getSceneX());
-            ligne.setStartY(event.getSceneY());
-        });
 
+
+        rectanglePerso1.setOnMousePressed(event -> {
+            if (Main.tour==0&&!lancerDone){
+                checkClick=true;
+                ligne.setStartX(event.getSceneX());
+                ligne.setStartY(event.getSceneY());
+            }
+
+        });
+        rectanglePerso2.setOnMousePressed(event -> {
+            if (Main.tour==1&&!lancerDone){
+                checkClick=true;
+                ligne.setStartX(event.getSceneX());
+                ligne.setStartY(event.getSceneY());
+            }
+
+        });
+        bPane.setOnMouseDragged(event -> {
+            if (checkClick){
+                ligne.setEndX(event.getSceneX());
+                ligne.setEndY(event.getSceneY());
+                transfo();
+                writeDonnee();
+            }
+        });
         bPane.setOnMouseReleased(event -> {
-            ligne.setEndX(event.getSceneX());
-            ligne.setEndY(event.getSceneY());
-            vitesseIni.set((int)(Math.sqrt(Math.pow((ligne.getEndX()-ligne.getStartX()),2)+Math.pow((ligne.getEndY()-ligne.getStartY()),2))));
-            angle.set((int)Math.toDegrees(Math.asin((ligne.getEndY()-ligne.getStartY())/(vitesseIni.get()))));
-            lancer();
+            if (checkClick){
+                lancerDone=true;
+                checkClick=false;
+                ligne.setEndX(event.getSceneX());
+                ligne.setEndY(event.getSceneY());
+                transfo();
+                writeDonnee();
+                lancer();
+            }
+
 
         });
     }
@@ -189,13 +224,13 @@ public class Controller {
     }
     public void finDeTour(){
         butFDT.setVisible(false);
+        lancerDone=false;
         if (Main.tour==0){
             Main.tour=1;
         }else {
             Main.tour=0;
         }
     }
-
     @FXML
     public void lancer(){
         double vitesse =vitesseIni.get();
@@ -281,5 +316,35 @@ public class Controller {
         }));
         timeline.play();
 
+    }
+    public void writeDonnee(){
+        if (Main.tour==0){
+            vitDonnee1.setText("Vitesse initiale : "+vitesseIni.get());
+            angleDonnee1.setText("Angle : "+angle.get());
+        }
+        else {
+            vitDonnee2.setText("Vitesse initiale : "+vitesseIni.get());
+            angleDonnee2.setText("Angle : "+angle.get());
+        }
+    }
+    public void transfo(){
+        vitesseIni.set((int)(Math.sqrt(Math.pow((ligne.getEndX()-ligne.getStartX()),2)+Math.pow((ligne.getEndY()-ligne.getStartY()),2))));
+        angle.set((int)Math.toDegrees(Math.asin((ligne.getEndY()-ligne.getStartY())/(vitesseIni.get()))));
+        if (Main.tour==0){
+            if (ligne.getStartX()<ligne.getEndX()){
+                angle.set(180-angle.get());
+            }
+            else if (angle.get()<0){
+                angle.set(360+angle.get());
+            }
+        }
+        else {
+            if (ligne.getStartX()>ligne.getEndX()){
+                angle.set(180-angle.get());
+            }
+            else if (angle.get()<0){
+                angle.set(360+angle.get());
+            }
+        }
     }
 }
