@@ -51,23 +51,26 @@ public class Main extends Application {
             }
         });
         root.setOnKeyReleased(event -> {
+            controller.nombre.set(0);
             if (event.getCode()== KeyCode.A){
                 if (tour==0){
                     personnage.setAPressed(false);
+                    controller.deplacerGaucheEtDroite(personnage);
                 }else {
                     personnage1.setAPressed(false);
+                    controller.deplacerGaucheEtDroite(personnage1);
                 }
             }
             if (event.getCode() == KeyCode.D){
                 if (tour==0){
                     personnage.setDPressed(false);
+                    controller.deplacerGaucheEtDroite(personnage);
                 }else {
                     personnage1.setDPressed(false);
+                    controller.deplacerGaucheEtDroite(personnage1);
                 }
             }
         });
-
-
     }
 
 
