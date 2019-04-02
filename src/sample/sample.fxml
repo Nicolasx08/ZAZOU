@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,8 +14,13 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
+      <TextArea fx:id="textarea" prefHeight="200.0" prefWidth="200.0" text="Bonjour, le but de Zazou est relativement simple. Il faut tuer l’adversaire en lui lançant des roches de différentes grosseurs. Pour lancer, tu dois appuyer sur ton personnage avec la souris et la glisser. Tu verras les variables angle et vitesse initiale changer a mesure que tu glisses. Lorsque tu es satisfait des variables tu relâches la souris et le lancer s’effectue. Tu peux aussi déplacer ton personnage avec les touches « A » et « D » pour augmenter la difficulté. Plus la vitesse lorsque tu percutes l’adversaire est élevé, plus la masse du projectile est élevé et plus tu touches l’adversaire près de la tête plus les dommages qu’il recevra seront élevés. Bon jeu! Et que le meilleur physicien gagne!" visible="false" wrapText="true">
+         <font>
+            <Font name="Sitka Small Bold" size="30.0" />
+         </font>
+      </TextArea>
       <ImageView fx:id="imageBackground" fitHeight="383.0" fitWidth="715.0" pickOnBounds="true" />
       <BorderPane fx:id="bpPerso" prefHeight="200.0" prefWidth="200.0">
          <center>
@@ -22,9 +28,9 @@
          </center></BorderPane>
       <BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1900.0">
          <left>
-            <VBox fx:id="vb1" prefHeight="200.0" prefWidth="100.0" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
+            <VBox fx:id="vb1" prefHeight="200.0" prefWidth="150.0" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Bob" />
+                  <Label fx:id="nom1" text="Bob" />
                   <Label fx:id="PDV1" text="100/100" />
                   <Label text="Vie" />
                   <ProgressBar fx:id="viePerso" prefWidth="200.0" progress="1.0">
@@ -33,16 +39,13 @@
                      </effect>
                   </ProgressBar>
                   <Button mnemonicParsing="false" text="Projectiles" />
-                  <Label fx:id="vitDonnee1" text="Vitesse initiale : ">
+                  <Label fx:id="vitDonnee1" graphicTextGap="8.0" text="Vitesse initiale : " />
+                  <Label fx:id="angleDonnee1" graphicTextGap="8.0" text="Angle : ">
                      <font>
-                        <Font size="11.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="angleDonnee1" text="Angle : ">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
+                  <Label fx:id="victoryRoyal" text="Victoire(s):" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -50,9 +53,9 @@
             </VBox>
          </left>
          <right>
-            <VBox fx:id="vb2" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
+            <VBox fx:id="vb2" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="150.0" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Tom" />
+                  <Label fx:id="nom2" text="Tom" />
                   <Label fx:id="PDV2" text="100/100" />
                   <Label text="Vie" />
                   <ProgressBar fx:id="viePerso1" prefWidth="200.0" progress="1.0">
@@ -61,16 +64,13 @@
                      </effect>
                   </ProgressBar>
                   <Button mnemonicParsing="false" text="Projectiles" />
-                  <Label fx:id="vitDonnee2" text="Vitesse Initiale : ">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Label>
+                  <Label fx:id="vitDonnee2" text="Vitesse Initiale : " />
                   <Label fx:id="angleDonnee2" text="Angle : ">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
+                  <Label fx:id="victoryRoyal1" text="Victoire(s):" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -78,7 +78,30 @@
             </VBox>
          </right>
          <center>
-            <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" text="Start" BorderPane.alignment="CENTER" />
+            <VBox alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" prefHeight="200.0" prefWidth="500.0" text="Start">
+                     <font>
+                        <Font size="74.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="instruction" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#learn" prefHeight="200.0" prefWidth="500.0" text="Instruction">
+                     <font>
+                        <Font size="74.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seeya" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#byeBye" prefHeight="200.0" prefWidth="500.0" text="Quitter">
+                     <font>
+                        <Font size="74.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="retour" mnemonicParsing="false" onAction="#back" prefHeight="200.0" prefWidth="500.0" text="Retour" visible="false">
+                     <font>
+                        <Font size="74.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </center>
           <bottom>
             <HBox spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
