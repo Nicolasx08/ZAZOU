@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.ImageView?>
@@ -16,6 +17,10 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
+      <Label fx:id="labWin" scaleX="3.0" scaleY="3.0" text="Label" visible="false">
+         <font>
+            <Font size="50.0" />
+         </font></Label>
       <TextArea fx:id="textarea" prefHeight="200.0" prefWidth="200.0" text="Bonjour, le but de Zazou est relativement simple. Il faut tuer l’adversaire en lui lançant des roches de différentes grosseurs. Pour lancer, tu dois appuyer sur ton personnage avec la souris et la glisser. Tu verras les variables angle et vitesse initiale changer a mesure que tu glisses. Lorsque tu es satisfait des variables tu relâches la souris et le lancer s’effectue. Tu peux aussi déplacer ton personnage avec les touches « A » et « D » pour augmenter la difficulté. Plus la vitesse lorsque tu percutes l’adversaire est élevé, plus la masse du projectile est élevé et plus tu touches l’adversaire près de la tête plus les dommages qu’il recevra seront élevés. Bon jeu! Et que le meilleur physicien gagne!" visible="false" wrapText="true">
          <font>
             <Font name="Sitka Small Bold" size="30.0" />
@@ -71,6 +76,19 @@
                      </font>
                   </Label>
                   <Label fx:id="victoryRoyal1" text="Victoire(s):" />
+                  <VBox>
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Volume">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <Slider fx:id="slidVol" max="1.0" maxWidth="400.0" prefWidth="400.0" value="1.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="700.0" />
+                     </VBox.margin>
+                  </VBox>
                </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -78,7 +96,7 @@
             </VBox>
          </right>
          <center>
-            <VBox alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="vb3" alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" prefHeight="200.0" prefWidth="500.0" text="Start">
                      <font>
@@ -106,7 +124,15 @@
           <bottom>
             <HBox spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
                <children>
+                  <Button fx:id="nope" mnemonicParsing="false" onAction="#byeBye" text="Quitter" visible="false">
+                     <font>
+                        <Font size="28.0" />
+                     </font></Button>
                   <Button fx:id="butFDT" mnemonicParsing="false" onAction="#finDeTour" text="Fin de tour" visible="false" />
+                  <Button fx:id="yeah" mnemonicParsing="false" onAction="#demarrage" text="Rejouer" visible="false">
+                     <font>
+                        <Font size="28.0" />
+                     </font></Button>
 
                </children>
             </HBox>

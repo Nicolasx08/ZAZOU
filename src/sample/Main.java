@@ -1,18 +1,28 @@
 package sample;
 
+import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import modele.Personnage;
+
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
 
 
 public class Main extends Application {
     public static int tour = 0;
     public  static Personnage personnage = new Personnage();
     public static Personnage personnage1 = new Personnage();
+    public static String musicFile = "opGGMax.mp3";
+    public static Media sound = new Media(new File(musicFile).toURI().toString());
+    public static MediaPlayer mediaPlayer = new MediaPlayer(sound);
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -24,6 +34,15 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
+
+
+
+        mediaPlayer.setCycleCount(Animation.INDEFINITE);
+        controller.slidVol.valueProperty().addListener((event)->{
+            mediaPlayer.setVolume(controller.slidVol.getValue());
+        });
+        mediaPlayer.play();
+
         root.setOnKeyPressed(event -> {
             if (event.getCode()== KeyCode.A){
                 if (tour==0){

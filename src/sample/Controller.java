@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -15,6 +16,8 @@ import modele.Personnage;
 import javafx.animation.Animation;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Circle;
+
+import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller {
@@ -66,6 +69,16 @@ public class Controller {
     public Label nom1;
     @FXML
     public Label nom2;
+    @FXML
+    public Button nope;
+    @FXML
+    public Button yeah;
+    @FXML
+    public VBox vb3;
+    @FXML
+    public Label labWin;
+    @FXML
+    public Slider slidVol;
 
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
@@ -80,50 +93,71 @@ public class Controller {
     public static int nbeVictoire1=0;
 
     public void demarrage(){
-        TextInputDialog tID = new TextInputDialog("Nom joueur 1");
-        tID.setTitle("Joueur 1");
-        tID.setHeaderText("Veuillez entrer votre nom");
-        tID.setContentText("Votre nom: ");
-        nom1.setText(tID.showAndWait().get());
+        if (nbeVictoire==0 && nbeVictoire1==0) {
+            TextInputDialog tID = new TextInputDialog("Nom joueur 1");
+            tID.setTitle("Joueur 1");
+            tID.setHeaderText("Veuillez entrer votre nom");
+            tID.setContentText("Votre nom: ");
+            Main.personnage.setNom(tID.showAndWait().get());
 
-        TextInputDialog tID1 = new TextInputDialog("Nom joueur 2");
-        tID1.setTitle("Joueur 2");
-        tID1.setHeaderText("Veuillez entrer votre nom");
-        tID1.setContentText("Votre nom: ");
-        nom2.setText(tID1.showAndWait().get());
+            TextInputDialog tID1 = new TextInputDialog("Nom joueur 2");
+            tID1.setTitle("Joueur 2");
+            tID1.setHeaderText("Veuillez entrer votre nom");
+            tID1.setContentText("Votre nom: ");
+            Main.personnage1.setNom(tID1.showAndWait().get());
+
+            nom1.setText(Main.personnage.getNom());
+            nom2.setText(Main.personnage1.getNom());
+
+            javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("samourai_David.png").toExternalForm());
+            Main.personnage1.setApparence(image2);
+            ImageView imageView1 = new ImageView(Main.personnage1.getApparence());
+            Main.personnage1.setApparenceVue(imageView1);
+            javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
+            Main.personnage.setApparence(image1);
+            ImageView imageView = new ImageView(Main.personnage.getApparence());
+            Main.personnage.setApparenceVue(imageView);
+            bPane.getChildren().add(rectanglePerso1);
+            bPane.getChildren().add(rectanglePerso2);
+            bpPerso.setRight(Main.personnage1.getApparenceVue());
+            bpPerso.setLeft(Main.personnage.getApparenceVue());
+            bpPerso.getRight().setTranslateX(-45);
+            Main.personnage1.setPosition(-45);
+            Main.personnage.setPosition(bpPerso.getLeft().getTranslateX());
+        }
+        ball.setVisible(false);
+        Main.personnage.setVie(100);
+        Main.personnage1.setVie(100);
+        PDV1.setText("100/100");
+        PDV2.setText("100/100");
+        viePerso.setProgress(1);
+        viePerso1.setProgress(1);
 
         javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundOfficiel.gif").toExternalForm());
         imageBackground.setImage(image);
         imageBackground.setFitHeight(1100);
         imageBackground.setFitWidth(1900);
+        imageBackground.setVisible(true);
 
-        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
-        Main.personnage.setApparence(image1);
-        ImageView imageView = new ImageView(Main.personnage.getApparence());
-        Main.personnage.setApparenceVue(imageView);
-        bpPerso.setLeft(Main.personnage.getApparenceVue());
         bpPerso.getLeft().setScaleX(0.2);
         bpPerso.getLeft().setScaleY(0.2);
         bpPerso.getLeft().setTranslateY(563);
-        Main.personnage.setPosition(bpPerso.getLeft().getTranslateX());
 
-        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("samourai_David.png").toExternalForm());
-        Main.personnage1.setApparence(image2);
-        ImageView imageView1 = new ImageView(Main.personnage1.getApparence());
-        Main.personnage1.setApparenceVue(imageView1);
-        bpPerso.setRight(Main.personnage1.getApparenceVue());
         bpPerso.getRight().setScaleX(0.4);
         bpPerso.getRight().setScaleY(0.4);
         bpPerso.getRight().setTranslateY(680);
-        bpPerso.getRight().setTranslateX(-45);
-        Main.personnage1.setPosition(-45);
+        bpPerso.setVisible(true);
 
+
+        labWin.setVisible(false);
+        nope.setVisible(false);
+        yeah.setVisible(false);
         butDemarrage.setVisible(false);
         vb1.setVisible(true);
         vb1.setTranslateY(75);
         vb2.setVisible(true);
         vb2.setTranslateY(75);
-        ball.setVisible(true);
+        vb3.setVisible(true);
         seeya.setVisible(false);
         instruction.setVisible(false);
         victoryRoyal.setText("Victoire(s): "+nbeVictoire);
@@ -133,9 +167,8 @@ public class Controller {
         ball.setFill(new ImagePattern(image3));
 
         rectanglePerso1.setOpacity(0);
-        bPane.getChildren().add(rectanglePerso1);
         rectanglePerso2.setOpacity(0);
-        bPane.getChildren().add(rectanglePerso2);
+
 
         rectanglePerso1.setOnMousePressed(event -> {
             if (Main.tour==0&&!lancerDone){
@@ -275,6 +308,7 @@ public class Controller {
     }
     public void finDeTour(){
         butFDT.setVisible(false);
+        ball.setVisible(false);
         lancerDone=false;
         if (Main.tour==0){
             Main.tour=1;
@@ -284,6 +318,7 @@ public class Controller {
     }
     @FXML
     public void lancer(){
+        ball.setVisible(true);
         double vitesse =vitesseIni.get();
         double angle2=angle.get();
         int[] counter={0};
@@ -326,6 +361,11 @@ public class Controller {
             ball.setTranslateY(ball.getCenterY()-(stepY.get()));
             ball.setCenterY(ball.getCenterY()-(stepY.get()));
             counter[0]++;
+            if (ball.getCenterY()<=-820 && ball.getCenterX()<=-95 && ball.getCenterX()>=-105 && ball.getCenterY()<= -825){
+                timeline.stop();
+                butFDT.setVisible(true);
+                Main.musicFile="opGGMax.mp3";
+            }
             if (ball.getCenterY()>=-128){
                 timeline.stop();
                 butFDT.setVisible(true);
@@ -337,7 +377,7 @@ public class Controller {
 
             if (Main.tour==0 && (ball.getCenterX()>= Main.personnage1.getPosition()+1140-rectanglePerso2.getWidth())&& (ball.getCenterX()<= Main.personnage1.getPosition()+1140)&& ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-787){
                 timeline.stop();
-                Main.personnage1.setVie(Main.personnage1.getVie()-((20)+(int)(((128-ball.getCenterY())/10)*(ball.getRadius()/40))));
+                Main.personnage1.setVie(Main.personnage1.getVie()-(((int)(ball.getRadius()*1.2)+(int)((128-ball.getCenterY())/40))+(vitesseIni.get()/20)));
                 PDV2.setText(Main.personnage1.getVie()+"/100");
                 if(Main.personnage1.getVie()<0){
                     Main.personnage1.setVie(0);
@@ -346,15 +386,22 @@ public class Controller {
                 butFDT.setVisible(true);
                 if (Main.personnage1.getVie()==0){
                     bpPerso.setVisible(false);
-                    bPane.setVisible(false);
                     imageBackground.setVisible(false);
-                    //Mettre joueur 1 a gagné
-                    //plus demander de rejoué
+                    vb1.setVisible(false);
+                    vb2.setVisible(false);
+                    vb3.setVisible(false);
+                    butFDT.setVisible(false);
+                    nope.setVisible(true);
+                    yeah.setVisible(true);
+                    labWin.setVisible(true);
+                    labWin.setText(Main.personnage.getNom()+ " a gagné!!");
+                    nbeVictoire=nbeVictoire+1;
+                    finDeTour();
                 }
             }
             if (Main.tour==1 && (ball.getCenterX()>= Main.personnage.getPosition()-294-rectanglePerso1.getWidth())&& (ball.getCenterX()+(leftRight.get()*ball.getRadius())<= Main.personnage.getPosition()-290)&& ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-800){
                 timeline.stop();
-                Main.personnage.setVie(Main.personnage.getVie()-((20)+(int)(((128-ball.getCenterY())/10)*(ball.getRadius()/40))));
+                Main.personnage.setVie(Main.personnage.getVie()-(((int)(ball.getRadius()*1.2)+(int)((128-ball.getCenterY())/40))+(vitesseIni.get()/20)));
                 PDV1.setText(Main.personnage.getVie()+"/100");
                 if(Main.personnage.getVie()<0){
                     Main.personnage.setVie(0);
@@ -363,10 +410,17 @@ public class Controller {
                 butFDT.setVisible(true);
                 if (Main.personnage.getVie()==0){
                     bpPerso.setVisible(false);
-                    bPane.setVisible(false);
                     imageBackground.setVisible(false);
-                    //Mettre joueur 2 a gagné
-                    //plus demander de rejoué
+                    vb1.setVisible(false);
+                    vb2.setVisible(false);
+                    vb3.setVisible(false);
+                    butFDT.setVisible(false);
+                    nope.setVisible(true);
+                    yeah.setVisible(true);
+                    labWin.setVisible(true);
+                    labWin.setText(Main.personnage1.getNom()+ " a gagné!!");
+                    nbeVictoire1=nbeVictoire1+1;
+                    finDeTour();
                 }
             }
         }));
