@@ -79,6 +79,10 @@ public class Controller {
     public Label labWin;
     @FXML
     public Slider slidVol;
+    @FXML
+    public Slider sliderMasse;
+    @FXML
+    public Slider sliderMasse1;
 
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
@@ -318,6 +322,19 @@ public class Controller {
     }
     @FXML
     public void lancer(){
+        AtomicInteger leftRight=new AtomicInteger(0);
+        if (Main.tour==0){
+        ball.setCenterX(bpPerso.getLeft().getTranslateX()-325);
+        ball.setCenterY(bpPerso.getLeft().getTranslateY()-730);
+        leftRight.set(1);
+        ball.setRadius(sliderMasse.getValue());
+        }
+        if (Main.tour==1){
+            ball.setCenterX(bpPerso.getRight().getTranslateX()+1100);
+            ball.setCenterY(bpPerso.getRight().getTranslateY()-845);
+            leftRight.set(-1);
+            ball.setRadius(sliderMasse1.getValue());
+        }
         ball.setVisible(true);
         double vitesse =vitesseIni.get();
         double angle2=angle.get();
@@ -325,8 +342,9 @@ public class Controller {
         angle2=angle2*0.0174533;
         double vitesseX=vitesse*(double)(Math.cos(angle2));
         double vitesseYIni=vitesse*(double)(Math.sin(angle2));
-        double gravite=-20;
-        AtomicInteger leftRight=new AtomicInteger(0);
+        double gravite=-2*ball.getRadius();
+
+
 
         SimpleDoubleProperty stepX=new SimpleDoubleProperty(0);
         SimpleDoubleProperty stepY=new SimpleDoubleProperty(0);
@@ -335,16 +353,7 @@ public class Controller {
         SimpleDoubleProperty lastPosX=new SimpleDoubleProperty(0);
         SimpleDoubleProperty lastPosY=new SimpleDoubleProperty(0);
 
-        if (Main.tour==0){
-            ball.setCenterX(bpPerso.getLeft().getTranslateX()-325);
-            ball.setCenterY(bpPerso.getLeft().getTranslateY()-730);
-            leftRight.set(1);
-        }
-        if (Main.tour==1){
-            ball.setCenterX(bpPerso.getRight().getTranslateX()+1100);
-            ball.setCenterY(bpPerso.getRight().getTranslateY()-845);
-            leftRight.set(-1);
-        }
+
         final Timeline timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setAutoReverse(false);
@@ -425,6 +434,8 @@ public class Controller {
             }
         }));
         timeline.play();
+
+
 
     }
     public void writeDonnee(){

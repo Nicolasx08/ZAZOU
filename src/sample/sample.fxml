@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Label fx:id="labWin" scaleX="3.0" scaleY="3.0" text="Label" visible="false">
          <font>
@@ -43,7 +43,8 @@
                         <ColorAdjust contrast="1.0" hue="1.0" />
                      </effect>
                   </ProgressBar>
-                  <Button mnemonicParsing="false" text="Projectiles" />
+                  <Label text="Masse" />
+                  <Slider fx:id="sliderMasse" max="30.0" min="5.0" showTickLabels="true" showTickMarks="true" value="10.0" />
                   <Label fx:id="vitDonnee1" graphicTextGap="8.0" text="Vitesse initiale : " />
                   <Label fx:id="angleDonnee1" graphicTextGap="8.0" text="Angle : ">
                      <font>
@@ -68,7 +69,8 @@
                         <ColorAdjust contrast="1.0" hue="1.0" />
                      </effect>
                   </ProgressBar>
-                  <Button mnemonicParsing="false" text="Projectiles" />
+                  <Label text="Masse" />
+                  <Slider fx:id="sliderMasse1" max="30.0" min="5.0" nodeOrientation="RIGHT_TO_LEFT" showTickLabels="true" showTickMarks="true" value="10.0" />
                   <Label fx:id="vitDonnee2" text="Vitesse Initiale : " />
                   <Label fx:id="angleDonnee2" text="Angle : ">
                      <font>
