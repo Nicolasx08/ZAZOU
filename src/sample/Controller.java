@@ -1,13 +1,15 @@
 package sample;
 
+import com.sun.media.jfxmedia.effects.AudioSpectrum;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -18,11 +20,14 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Circle;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller {
     @FXML
     public ImageView imageBackground;
+    @FXML
+    public ImageView imageStart;
     @FXML
     public BorderPane bpPerso;
     @FXML
@@ -79,18 +84,30 @@ public class Controller {
     public Label labWin;
     @FXML
     public Slider slidVol;
+    @FXML
+    public Slider masseProjectile;
+    @FXML
+    public Slider masseProjectile1;
+    @FXML
+    public ImageView imageZAZOU;
+    @FXML
+    public ImageView imageFin;
 
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
 
     public static AtomicInteger angle = new AtomicInteger();
-    public static AtomicInteger vitesseIni = new AtomicInteger();
+    public static AtomicInteger forceIni = new AtomicInteger();
     public static Boolean checkClick=false;
     public static Boolean lancerDone=false;
     public static Line ligne = new Line();
     public static boolean animation = false;
     public static int nbeVictoire=0;
     public static int nbeVictoire1=0;
+    public static AtomicBoolean max = new AtomicBoolean(false);
+    public static String musicFile2 = "opGGMax.mp3";
+    public static Media sound2 = new Media(new File(musicFile2).toURI().toString());
+    public static MediaPlayer mPlayer2 = new MediaPlayer(sound2);
 
     public void demarrage(){
         if (nbeVictoire==0 && nbeVictoire1==0) {
@@ -125,6 +142,12 @@ public class Controller {
             Main.personnage1.setPosition(-45);
             Main.personnage.setPosition(bpPerso.getLeft().getTranslateX());
         }
+        imageStart.setVisible(false);
+        imageZAZOU.setVisible(false);
+        imageFin.setVisible(false);
+        imageFin.setFitHeight(1100);
+        imageFin.setFitWidth(1900);
+
         ball.setVisible(false);
         Main.personnage.setVie(100);
         Main.personnage1.setVie(100);
@@ -318,13 +341,16 @@ public class Controller {
     }
     @FXML
     public void lancer(){
+        String musicFile3 = "splash.mp3";
+        Media sound3 = new Media(new File(musicFile3).toURI().toString());
+        MediaPlayer mPlayer3 = new MediaPlayer(sound3);
         ball.setVisible(true);
-        double vitesse =vitesseIni.get();
+        double force= forceIni.get();
+
         double angle2=angle.get();
         int[] counter={0};
         angle2=angle2*0.0174533;
-        double vitesseX=vitesse*(double)(Math.cos(angle2));
-        double vitesseYIni=vitesse*(double)(Math.sin(angle2));
+
         double gravite=-20;
         AtomicInteger leftRight=new AtomicInteger(0);
 
@@ -336,15 +362,20 @@ public class Controller {
         SimpleDoubleProperty lastPosY=new SimpleDoubleProperty(0);
 
         if (Main.tour==0){
+            ball.setRadius(masseProjectile.getValue());
             ball.setCenterX(bpPerso.getLeft().getTranslateX()-325);
             ball.setCenterY(bpPerso.getLeft().getTranslateY()-730);
             leftRight.set(1);
         }
         if (Main.tour==1){
+            ball.setRadius(masseProjectile1.getValue());
             ball.setCenterX(bpPerso.getRight().getTranslateX()+1100);
             ball.setCenterY(bpPerso.getRight().getTranslateY()-845);
             leftRight.set(-1);
         }
+        double vitesse =(force/ball.getRadius())*10;
+        double vitesseX=vitesse*(double)(Math.cos(angle2));
+        double vitesseYIni=vitesse*(double)(Math.sin(angle2));
         final Timeline timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setAutoReverse(false);
@@ -361,12 +392,21 @@ public class Controller {
             ball.setTranslateY(ball.getCenterY()-(stepY.get()));
             ball.setCenterY(ball.getCenterY()-(stepY.get()));
             counter[0]++;
-            if (ball.getCenterY()<=-820 && ball.getCenterX()<=-95 && ball.getCenterX()>=-105 && ball.getCenterY()<= -825){
+            if (ball.getCenterY()<=-810 && ball.getCenterX()<=-90 && ball.getCenterX()>=-110 && ball.getCenterY()<= -830 && !max.get()){
                 timeline.stop();
                 butFDT.setVisible(true);
-                Main.musicFile="opGGMax.mp3";
+                max.set(true);
+                mPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
+                slidVol.valueProperty().addListener((event2)->{
+                    mPlayer2.setVolume(slidVol.getValue());
+                });
+                mPlayer2.play();
+                Main.mediaPlayer.stop();
             }
             if (ball.getCenterY()>=-128){
+                if (ball.getCenterX()>=12 && ball.getCenterX()<=675){
+                    mPlayer3.play();
+                }
                 timeline.stop();
                 butFDT.setVisible(true);
             }
@@ -377,7 +417,7 @@ public class Controller {
 
             if (Main.tour==0 && (ball.getCenterX()>= Main.personnage1.getPosition()+1140-rectanglePerso2.getWidth())&& (ball.getCenterX()<= Main.personnage1.getPosition()+1140)&& ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-787){
                 timeline.stop();
-                Main.personnage1.setVie(Main.personnage1.getVie()-(((int)(ball.getRadius()*1.2)+(int)((128-ball.getCenterY())/40))+(vitesseIni.get()/20)));
+                Main.personnage1.setVie(((Main.personnage1.getVie()-(((int)(ball.getRadius()*1.2)+(int)((128-ball.getCenterY())/40))+(forceIni.get()/20))))+10);
                 PDV2.setText(Main.personnage1.getVie()+"/100");
                 if(Main.personnage1.getVie()<0){
                     Main.personnage1.setVie(0);
@@ -396,12 +436,13 @@ public class Controller {
                     labWin.setVisible(true);
                     labWin.setText(Main.personnage.getNom()+ " a gagné!!");
                     nbeVictoire=nbeVictoire+1;
+                    imageFin.setVisible(true);
                     finDeTour();
                 }
             }
             if (Main.tour==1 && (ball.getCenterX()>= Main.personnage.getPosition()-294-rectanglePerso1.getWidth())&& (ball.getCenterX()+(leftRight.get()*ball.getRadius())<= Main.personnage.getPosition()-290)&& ball.getCenterY()>=bpPerso.getLeft().getTranslateY()-800){
                 timeline.stop();
-                Main.personnage.setVie(Main.personnage.getVie()-(((int)(ball.getRadius()*1.2)+(int)((128-ball.getCenterY())/40))+(vitesseIni.get()/20)));
+                Main.personnage.setVie((Main.personnage.getVie()-(((int)(ball.getRadius()*1.2)+(int)((128-ball.getCenterY())/40))+(forceIni.get()/20)))+10);
                 PDV1.setText(Main.personnage.getVie()+"/100");
                 if(Main.personnage.getVie()<0){
                     Main.personnage.setVie(0);
@@ -420,6 +461,7 @@ public class Controller {
                     labWin.setVisible(true);
                     labWin.setText(Main.personnage1.getNom()+ " a gagné!!");
                     nbeVictoire1=nbeVictoire1+1;
+                    imageFin.setVisible(true);
                     finDeTour();
                 }
             }
@@ -429,17 +471,17 @@ public class Controller {
     }
     public void writeDonnee(){
         if (Main.tour==0){
-            vitDonnee1.setText("Vitesse initiale : "+vitesseIni.get());
+            vitDonnee1.setText("Force initiale : "+forceIni.get());
             angleDonnee1.setText("Angle : "+angle.get());
         }
         else {
-            vitDonnee2.setText("Vitesse initiale : "+vitesseIni.get());
+            vitDonnee2.setText("Force initiale : "+forceIni.get());
             angleDonnee2.setText("Angle : "+angle.get());
         }
     }
     public void transfo(){
-        vitesseIni.set((int)(Math.sqrt(Math.pow((ligne.getEndX()-ligne.getStartX()),2)+Math.pow((ligne.getEndY()-ligne.getStartY()),2))));
-        angle.set((int)Math.toDegrees(Math.asin((ligne.getEndY()-ligne.getStartY())/(vitesseIni.get()))));
+        forceIni.set((int)(Math.sqrt(Math.pow((ligne.getEndX()-ligne.getStartX()),2)+Math.pow((ligne.getEndY()-ligne.getStartY()),2))));
+        angle.set((int)Math.toDegrees(Math.asin((ligne.getEndY()-ligne.getStartY())/(forceIni.get()))));
         if (Main.tour==0){
             if (ligne.getStartX()<ligne.getEndX()){
                 angle.set(180-angle.get());

@@ -19,7 +19,7 @@ public class Main extends Application {
     public static int tour = 0;
     public  static Personnage personnage = new Personnage();
     public static Personnage personnage1 = new Personnage();
-    public static String musicFile = "opGGMax.mp3";
+    public static String musicFile = "touneIni.mp3";
     public static Media sound = new Media(new File(musicFile).toURI().toString());
     public static MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
@@ -35,9 +35,17 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
+        javafx.scene.image.Image imageDebut = new javafx.scene.image.Image(getClass().getResource("imageStart.png").toExternalForm());
+        controller.imageStart.setImage(imageDebut);
+        controller.imageStart.setFitHeight(1100);
+        controller.imageStart.setFitWidth(1900);
+        javafx.scene.image.Image imageZAZOU = new javafx.scene.image.Image(getClass().getResource("zazouStart.png").toExternalForm());
+        controller.imageZAZOU.setImage(imageZAZOU);
+        javafx.scene.image.Image imageFinVictoire = new javafx.scene.image.Image(getClass().getResource("victoryPhoto.jpg").toExternalForm());
+        controller.imageFin.setImage(imageFinVictoire);
 
 
-        mediaPlayer.setCycleCount(Animation.INDEFINITE);
+        mediaPlayer.setCycleCount(mediaPlayer.INDEFINITE);
         controller.slidVol.valueProperty().addListener((event)->{
             mediaPlayer.setVolume(controller.slidVol.getValue());
         });
