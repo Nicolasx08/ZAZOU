@@ -102,24 +102,26 @@ public class Controller {
     public Label Mp2;
     @FXML
     public Label volume;
+    @FXML
+    public HBox hb1;
 
-    public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
-    public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
+    private static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
+    private static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
 
-    public static AtomicInteger angle = new AtomicInteger();
-    public static AtomicInteger forceIni = new AtomicInteger();
-    public static Boolean checkClick=false;
-    public static Boolean lancerDone=false;
-    public static Line ligne = new Line();
-    public static boolean animation = false;
-    public static int nbeVictoire=0;
-    public static int nbeVictoire1=0;
-    public static AtomicBoolean max = new AtomicBoolean(false);
-    public static String musicFile2 = "opGGMax.mp3";
-    public static Media sound2 = new Media(new File(musicFile2).toURI().toString());
-    public static MediaPlayer mPlayer2 = new MediaPlayer(sound2);
-    public static double gravite=0;
-    public static boolean changerMap= true;
+    private static AtomicInteger angle = new AtomicInteger();
+    private static AtomicInteger forceIni = new AtomicInteger();
+    private static Boolean checkClick=false;
+    private static Boolean lancerDone=false;
+    private static Line ligne = new Line();
+    private static boolean animation = false;
+    private static int nbeVictoire=0;
+    private static int nbeVictoire1=0;
+    private static AtomicBoolean max = new AtomicBoolean(false);
+    private static String musicFile2 = "opGGMax.mp3";
+    private static Media sound2 = new Media(new File(musicFile2).toURI().toString());
+    private static MediaPlayer mPlayer2 = new MediaPlayer(sound2);
+    private static double gravite=0;
+    private static boolean changerMap= true;
 
     public void demarrage(){
         if ((nbeVictoire==0 && nbeVictoire1==0 )|| changerMap){
@@ -297,7 +299,7 @@ public class Controller {
 
         });
     }
-    public void deplacerGaucheEtDroite(Personnage personne){
+     void deplacerGaucheEtDroite(Personnage personne){
         if (!butDemarrage.isVisible()){
             if (!animation){
                 if (Main.tour==0){
@@ -406,14 +408,13 @@ public class Controller {
         }
     }
     @FXML
-    public void lancer(){
+    private void lancer(){
         String musicFile3 = "splash.mp3";
         Media sound3 = new Media(new File(musicFile3).toURI().toString());
         MediaPlayer mPlayer3 = new MediaPlayer(sound3);
         mPlayer3.setVolume(slidVol.getValue());
         ball.setVisible(true);
         double force= forceIni.get();
-
         double angle2=angle.get();
         int[] counter={0};
         angle2=angle2*0.0174533;
@@ -440,8 +441,8 @@ public class Controller {
             leftRight.set(-1);
         }
         double vitesse =(force/ball.getRadius())*10;
-        double vitesseX=vitesse*(double)(Math.cos(angle2));
-        double vitesseYIni=vitesse*(double)(Math.sin(angle2));
+        double vitesseX=vitesse*(Math.cos(angle2));
+        double vitesseYIni=vitesse*(Math.sin(angle2));
         final Timeline timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setAutoReverse(false);
@@ -463,9 +464,7 @@ public class Controller {
                 butFDT.setVisible(true);
                 max.set(true);
                 mPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
-                slidVol.valueProperty().addListener((event2)->{
-                    mPlayer2.setVolume(slidVol.getValue());
-                });
+                slidVol.valueProperty().addListener((event2)-> mPlayer2.setVolume(slidVol.getValue()));
                 mPlayer2.play();
                 Main.mediaPlayer.stop();
             }
@@ -537,7 +536,7 @@ public class Controller {
         timeline.play();
 
     }
-    public void writeDonnee(){
+    private void writeDonnee(){
         if (Main.tour==0){
             vitDonnee1.setText("Force initiale : "+forceIni.get());
             angleDonnee1.setText("Angle : "+angle.get());
@@ -547,7 +546,7 @@ public class Controller {
             angleDonnee2.setText("Angle : "+angle.get());
         }
     }
-    public void transfo(){
+    private void transfo(){
         forceIni.set((int)(Math.sqrt(Math.pow((ligne.getEndX()-ligne.getStartX()),2)+Math.pow((ligne.getEndY()-ligne.getStartY()),2))));
         angle.set((int)Math.toDegrees(Math.asin((ligne.getEndY()-ligne.getStartY())/(forceIni.get()))));
         if (Main.tour==0){

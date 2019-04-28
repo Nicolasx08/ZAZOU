@@ -16,7 +16,6 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <children>
       <ImageView fx:id="imageFin" fitHeight="383.0" fitWidth="715.0" pickOnBounds="true" visible="false" />
       <ImageView fx:id="imageStart" fitHeight="383.0" fitWidth="715.0" pickOnBounds="true" />
       <Label fx:id="labWin" scaleX="3.0" scaleY="3.0" text="Label" translateY="-290.0" visible="false">
@@ -39,7 +38,6 @@
       <BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1900.0">
          <left>
             <VBox fx:id="vb1" prefHeight="200.0" prefWidth="150.0" scaleX="1.3" scaleY="1.3" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
-               <children>
                   <Label fx:id="nom1" text="Bob">
                      <font>
                         <Font name="System Bold" size="19.0" />
@@ -63,7 +61,6 @@
                      </font>
                   </Label>
                   <Label fx:id="victoryRoyal" text="Victoire(s):" />
-               </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="60.0" right="15.0" top="150.0" />
                </BorderPane.margin>
@@ -71,7 +68,6 @@
          </left>
          <right>
             <VBox fx:id="vb2" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="150.0" scaleX="1.3" scaleY="1.3" spacing="5.0" visible="false" BorderPane.alignment="CENTER">
-               <children>
                   <Label fx:id="nom2" text="Tom">
                      <font>
                         <Font name="System Bold" size="19.0" />
@@ -96,19 +92,16 @@
                   </Label>
                   <Label fx:id="victoryRoyal1" text="Victoire(s):" />
                   <VBox spacing="20.0">
-                     <children>
                         <Label fx:id="volume" alignment="CENTER" contentDisplay="CENTER" text="Volume">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Label>
                         <Slider fx:id="slidVol" max="1.0" maxWidth="400.0" prefWidth="400.0" value="1.0" />
-                     </children>
                      <VBox.margin>
                         <Insets top="405.0" />
                      </VBox.margin>
                   </VBox>
-               </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="60.0" top="150.0" />
                </BorderPane.margin>
@@ -116,7 +109,6 @@
          </right>
          <center>
             <VBox fx:id="vb3" alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
-               <children>
                   <ImageView fx:id="imageZAZOU" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" scaleX="5.0" scaleY="5.0" translateY="250.0" />
                   <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" prefHeight="200.0" prefWidth="500.0" text="Start">
                      <font>
@@ -138,15 +130,13 @@
                         <Font size="74.0" />
                      </font>
                   </Button>
-               </children>
                <BorderPane.margin>
                   <Insets top="75.0" />
                </BorderPane.margin>
             </VBox>
          </center>
           <bottom>
-            <HBox spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
-               <children>
+            <HBox fx:id="hb1" spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
                   <Button fx:id="nope" mnemonicParsing="false" onAction="#byeBye" text="Quitter" visible="false">
                      <font>
                         <Font size="28.0" />
@@ -160,10 +150,7 @@
                      <font>
                         <Font size="28.0" />
                      </font></Button>
-
-               </children>
             </HBox>
           </bottom>
       </BorderPane>
-   </children>
 </StackPane>

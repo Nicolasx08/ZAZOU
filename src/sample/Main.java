@@ -13,19 +13,19 @@ import java.io.File;
 
 
 public class Main extends Application {
-    public static int tour = 0;
-    public  static Personnage personnage = new Personnage();
-    public static Personnage personnage1 = new Personnage();
-    public static String musicFile = "touneIni.mp3";
-    public static Media sound = new Media(new File(musicFile).toURI().toString());
-    public static MediaPlayer mediaPlayer = new MediaPlayer(sound);
+    static int tour = 0;
+    static Personnage personnage = new Personnage();
+    static Personnage personnage1 = new Personnage();
+    private static String musicFile = "touneIni.mp3";
+    private static Media sound = new Media(new File(musicFile).toURI().toString());
+    static MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("sample.fxml").openStream());
-        Controller controller = (Controller) loader.getController();
+        Controller controller = loader.getController();
         primaryStage.setTitle("Zazou");
         primaryStage.setScene(new Scene(root));
         primaryStage.setMaximized(true);
@@ -42,10 +42,8 @@ public class Main extends Application {
         controller.imageFin.setImage(imageFinVictoire);
 
 
-        mediaPlayer.setCycleCount(mediaPlayer.INDEFINITE);
-        controller.slidVol.valueProperty().addListener((event)->{
-            mediaPlayer.setVolume(controller.slidVol.getValue());
-        });
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        controller.slidVol.valueProperty().addListener((event)-> mediaPlayer.setVolume(controller.slidVol.getValue()));
         mediaPlayer.play();
 
         root.setOnKeyPressed(event -> {
