@@ -1,13 +1,11 @@
 package sample;
 
-import com.sun.media.jfxmedia.effects.AudioSpectrum;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
@@ -18,8 +16,8 @@ import modele.Personnage;
 import javafx.animation.Animation;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Circle;
-
 import java.io.File;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -92,6 +90,18 @@ public class Controller {
     public ImageView imageZAZOU;
     @FXML
     public ImageView imageFin;
+    @FXML
+    public Button butChangerMap;
+    @FXML
+    public Label vie1;
+    @FXML
+    public Label Mp1;
+    @FXML
+    public Label vie2;
+    @FXML
+    public Label Mp2;
+    @FXML
+    public Label volume;
 
     public static Rectangle rectanglePerso1 = new Rectangle(255,840,50,100);
     public static Rectangle rectanglePerso2 = new Rectangle(1655,840,50,100);
@@ -108,8 +118,65 @@ public class Controller {
     public static String musicFile2 = "opGGMax.mp3";
     public static Media sound2 = new Media(new File(musicFile2).toURI().toString());
     public static MediaPlayer mPlayer2 = new MediaPlayer(sound2);
+    public static double gravite=0;
+    public static boolean changerMap= true;
 
     public void demarrage(){
+        if ((nbeVictoire==0 && nbeVictoire1==0 )|| changerMap){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Choix de la zone de combat");
+            alert.setHeaderText("La gravité variera selon la zone de combat");
+            alert.setContentText("Choisissez votre zone de combat.");
+
+            ButtonType buttonTypeTerre = new ButtonType("Terre");
+            ButtonType buttonTypeLune = new ButtonType("Lune");
+
+            alert.getButtonTypes().setAll(buttonTypeTerre, buttonTypeLune);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeTerre){
+                javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundOfficiel.gif").toExternalForm());
+                imageBackground.setVisible(false);
+                imageBackground.setImage(image);
+                nom1.setStyle("-fx-text-fill: black");
+                PDV1.setStyle("-fx-text-fill: black");
+                vie1.setStyle("-fx-text-fill: black");
+                Mp1.setStyle("-fx-text-fill: black");
+                vitDonnee1.setStyle("-fx-text-fill: black");
+                angleDonnee1.setStyle("-fx-text-fill: black");
+                victoryRoyal.setStyle("-fx-text-fill: black");
+                nom2.setStyle("-fx-text-fill: black");
+                PDV2.setStyle("-fx-text-fill: black");
+                vie2.setStyle("-fx-text-fill: black");
+                Mp2.setStyle("-fx-text-fill: black");
+                vitDonnee2.setStyle("-fx-text-fill: black");
+                angleDonnee2.setStyle("-fx-text-fill: black");
+                victoryRoyal1.setStyle("-fx-text-fill: black");
+                volume.setStyle("-fx-text-fill: black");
+                gravite=-20;
+            } else if (result.get() == buttonTypeLune) {
+                javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("lune.gif").toExternalForm());
+                imageBackground.setVisible(false);
+                imageBackground.setImage(image);
+                nom1.setStyle("-fx-text-fill: white");
+                PDV1.setStyle("-fx-text-fill: white");
+                vie1.setStyle("-fx-text-fill: white");
+                Mp1.setStyle("-fx-text-fill: white");
+                vitDonnee1.setStyle("-fx-text-fill: white");
+                angleDonnee1.setStyle("-fx-text-fill: white");
+                victoryRoyal.setStyle("-fx-text-fill: white");
+                nom2.setStyle("-fx-text-fill: white");
+                PDV2.setStyle("-fx-text-fill: white");
+                vie2.setStyle("-fx-text-fill: white");
+                Mp2.setStyle("-fx-text-fill: white");
+                vitDonnee2.setStyle("-fx-text-fill: white");
+                angleDonnee2.setStyle("-fx-text-fill: white");
+                victoryRoyal1.setStyle("-fx-text-fill: white");
+                volume.setStyle("-fx-text-fill: red");
+                gravite=-10;
+            }
+            changerMap=false;
+        }
         if (nbeVictoire==0 && nbeVictoire1==0) {
             TextInputDialog tID = new TextInputDialog("Nom joueur 1");
             tID.setTitle("Joueur 1");
@@ -148,6 +215,10 @@ public class Controller {
         imageFin.setFitHeight(1100);
         imageFin.setFitWidth(1900);
 
+        imageBackground.setFitHeight(1100);
+        imageBackground.setFitWidth(1900);
+        imageBackground.setVisible(true);
+
         ball.setVisible(false);
         Main.personnage.setVie(100);
         Main.personnage1.setVie(100);
@@ -155,12 +226,6 @@ public class Controller {
         PDV2.setText("100/100");
         viePerso.setProgress(1);
         viePerso1.setProgress(1);
-
-        javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundOfficiel.gif").toExternalForm());
-        imageBackground.setImage(image);
-        imageBackground.setFitHeight(1100);
-        imageBackground.setFitWidth(1900);
-        imageBackground.setVisible(true);
 
         bpPerso.getLeft().setScaleX(0.2);
         bpPerso.getLeft().setScaleY(0.2);
@@ -175,6 +240,7 @@ public class Controller {
         labWin.setVisible(false);
         nope.setVisible(false);
         yeah.setVisible(false);
+        butChangerMap.setVisible(false);
         butDemarrage.setVisible(false);
         vb1.setVisible(true);
         vb1.setTranslateY(75);
@@ -344,6 +410,7 @@ public class Controller {
         String musicFile3 = "splash.mp3";
         Media sound3 = new Media(new File(musicFile3).toURI().toString());
         MediaPlayer mPlayer3 = new MediaPlayer(sound3);
+        mPlayer3.setVolume(slidVol.getValue());
         ball.setVisible(true);
         double force= forceIni.get();
 
@@ -351,7 +418,6 @@ public class Controller {
         int[] counter={0};
         angle2=angle2*0.0174533;
 
-        double gravite=-20;
         AtomicInteger leftRight=new AtomicInteger(0);
 
         SimpleDoubleProperty stepX=new SimpleDoubleProperty(0);
@@ -433,6 +499,7 @@ public class Controller {
                     butFDT.setVisible(false);
                     nope.setVisible(true);
                     yeah.setVisible(true);
+                    butChangerMap.setVisible(true);
                     labWin.setVisible(true);
                     labWin.setText(Main.personnage.getNom()+ " a gagné!!");
                     nbeVictoire=nbeVictoire+1;
@@ -458,6 +525,7 @@ public class Controller {
                     butFDT.setVisible(false);
                     nope.setVisible(true);
                     yeah.setVisible(true);
+                    butChangerMap.setVisible(true);
                     labWin.setVisible(true);
                     labWin.setText(Main.personnage1.getNom()+ " a gagné!!");
                     nbeVictoire1=nbeVictoire1+1;
@@ -510,6 +578,7 @@ public class Controller {
         seeya.setVisible(false);
         textarea.setVisible(true);
         retour.setVisible(true);
+        imageZAZOU.setVisible(false);
     }
     @FXML
     public void back(){
@@ -518,5 +587,10 @@ public class Controller {
         seeya.setVisible(true);
         textarea.setVisible(false);
         retour.setVisible(false);
+    }
+    @FXML
+    public void changerMap(){
+        changerMap= true;
+        demarrage();
     }
 }

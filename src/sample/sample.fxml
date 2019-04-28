@@ -45,13 +45,13 @@
                         <Font name="System Bold" size="19.0" />
                      </font></Label>
                   <Label fx:id="PDV1" text="100/100" />
-                  <Label text="Vie" />
+                  <Label fx:id="vie1" text="Vie" />
                   <ProgressBar fx:id="viePerso" prefWidth="200.0" progress="1.0">
                      <effect>
                         <ColorAdjust contrast="1.0" hue="1.0" />
                      </effect>
                   </ProgressBar>
-                  <Label text="Masse du projectile" />
+                  <Label fx:id="Mp1" text="Masse du projectile" />
                   <Slider fx:id="masseProjectile" max="30.0" min="5.0" showTickLabels="true" showTickMarks="true" value="10.0" />
                   <Label fx:id="vitDonnee1" graphicTextGap="8.0" text="Force initiale">
                      <font>
@@ -77,13 +77,13 @@
                         <Font name="System Bold" size="19.0" />
                      </font></Label>
                   <Label fx:id="PDV2" text="100/100" />
-                  <Label text="Vie" />
+                  <Label fx:id="vie2" text="Vie" />
                   <ProgressBar fx:id="viePerso1" prefWidth="200.0" progress="1.0">
                      <effect>
                         <ColorAdjust contrast="1.0" hue="1.0" />
                      </effect>
                   </ProgressBar>
-                  <Label text="Masse du projectile" />
+                  <Label fx:id="Mp2" text="Masse du projectile" />
                   <Slider fx:id="masseProjectile1" max="30.0" min="5.0" nodeOrientation="RIGHT_TO_LEFT" showTickLabels="true" showTickMarks="true" value="10.0" />
                   <Label fx:id="vitDonnee2" text="Force initiale">
                      <font>
@@ -97,7 +97,7 @@
                   <Label fx:id="victoryRoyal1" text="Victoire(s):" />
                   <VBox spacing="20.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Volume">
+                        <Label fx:id="volume" alignment="CENTER" contentDisplay="CENTER" text="Volume">
                            <font>
                               <Font size="21.0" />
                            </font>
@@ -153,6 +153,10 @@
                      </font></Button>
                   <Button fx:id="butFDT" mnemonicParsing="false" onAction="#finDeTour" text="Fin de tour" visible="false" />
                   <Button fx:id="yeah" mnemonicParsing="false" onAction="#demarrage" text="Rejouer" visible="false">
+                     <font>
+                        <Font size="28.0" />
+                     </font></Button>
+                  <Button fx:id="butChangerMap" mnemonicParsing="false" onAction="#changerMap" prefHeight="60.0" prefWidth="231.0" text="Changer map" visible="false">
                      <font>
                         <Font size="28.0" />
                      </font></Button>

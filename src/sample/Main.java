@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +9,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import modele.Personnage;
-
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 
@@ -75,6 +72,14 @@ public class Main extends Application {
 
 
             }
+
+            if (event.getCode() == KeyCode.SPACE){
+                if (controller.butFDT.isVisible()){
+                    controller.finDeTour();
+                }
+            }
+
+
         });
         root.setOnKeyReleased(event -> {
             if (event.getCode()== KeyCode.A){
