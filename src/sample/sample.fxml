@@ -110,7 +110,7 @@
          <center>
             <VBox fx:id="vb3" alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
                   <ImageView fx:id="imageZAZOU" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" scaleX="5.0" scaleY="5.0" translateY="250.0" />
-                  <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" prefHeight="200.0" prefWidth="500.0" text="Start">
+                  <Button fx:id="butDemarrage" mnemonicParsing="false" onAction="#demarrage" prefHeight="200.0" prefWidth="500.0" text="Commencer">
                      <font>
                         <Font size="74.0" />
                      </font>
