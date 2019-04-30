@@ -9,7 +9,6 @@
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -136,7 +135,6 @@
             </VBox>
          </center>
           <bottom>
-            <HBox fx:id="hb1" spacing="15.0" translateX="800.0" translateY="-50.0" BorderPane.alignment="CENTER">
                   <Button fx:id="nope" mnemonicParsing="false" onAction="#byeBye" text="Quitter" visible="false">
                      <font>
                         <Font size="28.0" />
@@ -150,7 +148,6 @@
                      <font>
                         <Font size="28.0" />
                      </font></Button>
-            </HBox>
           </bottom>
       </BorderPane>
 </StackPane>

@@ -31,17 +31,7 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
-
-        javafx.scene.image.Image imageDebut = new javafx.scene.image.Image(getClass().getResource("imageStart.png").toExternalForm());
-        controller.imageStart.setImage(imageDebut);
-        controller.imageStart.setFitHeight(1100);
-        controller.imageStart.setFitWidth(1900);
-        javafx.scene.image.Image imageZAZOU = new javafx.scene.image.Image(getClass().getResource("zazouStart.png").toExternalForm());
-        controller.imageZAZOU.setImage(imageZAZOU);
-        javafx.scene.image.Image imageFinVictoire = new javafx.scene.image.Image(getClass().getResource("victoryPhoto.jpg").toExternalForm());
-        controller.imageFin.setImage(imageFinVictoire);
-
-
+        setImage(controller);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         controller.slidVol.valueProperty().addListener((event)-> mediaPlayer.setVolume(controller.slidVol.getValue()));
         mediaPlayer.play();
@@ -104,5 +94,16 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+    private void setImage(Controller controller){
+        javafx.scene.image.Image imageDebut = new javafx.scene.image.Image(getClass().getResource("imageStart.png").toExternalForm());
+        controller.imageStart.setImage(imageDebut);
+        controller.imageStart.setFitHeight(1100);
+        controller.imageStart.setFitWidth(1900);
+        javafx.scene.image.Image imageZAZOU = new javafx.scene.image.Image(getClass().getResource("zazouStart.png").toExternalForm());
+        controller.imageZAZOU.setImage(imageZAZOU);
+        javafx.scene.image.Image imageFinVictoire = new javafx.scene.image.Image(getClass().getResource("victoryPhoto.jpg").toExternalForm());
+        controller.imageFin.setImage(imageFinVictoire);
+
     }
 }
