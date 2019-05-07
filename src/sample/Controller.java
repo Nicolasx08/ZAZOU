@@ -644,4 +644,284 @@ public class Controller {
             finDeTour();
         }
     }
+    private void setColorTerreGrav(){
+        javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("backgroundOfficiel.gif").toExternalForm());
+        imageBackground.setVisible(false);
+        imageBackground.setImage(image);
+        nom1.setStyle("-fx-text-fill: black");
+        PDV1.setStyle("-fx-text-fill: black");
+        vie1.setStyle("-fx-text-fill: black");
+        Mp1.setStyle("-fx-text-fill: black");
+        vitDonnee1.setStyle("-fx-text-fill: black");
+        angleDonnee1.setStyle("-fx-text-fill: black");
+        victoryRoyal.setStyle("-fx-text-fill: black");
+        nom2.setStyle("-fx-text-fill: black");
+        PDV2.setStyle("-fx-text-fill: black");
+        vie2.setStyle("-fx-text-fill: black");
+        Mp2.setStyle("-fx-text-fill: black");
+        vitDonnee2.setStyle("-fx-text-fill: black");
+        angleDonnee2.setStyle("-fx-text-fill: black");
+        victoryRoyal1.setStyle("-fx-text-fill: black");
+        volume.setStyle("-fx-text-fill: black");
+        gravite=-20;
+    }
+    private void setColorLuneGrav(){
+        javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource("lune.gif").toExternalForm());
+        imageBackground.setVisible(false);
+        imageBackground.setImage(image);
+        nom1.setStyle("-fx-text-fill: white");
+        PDV1.setStyle("-fx-text-fill: white");
+        vie1.setStyle("-fx-text-fill: white");
+        Mp1.setStyle("-fx-text-fill: white");
+        vitDonnee1.setStyle("-fx-text-fill: white");
+        angleDonnee1.setStyle("-fx-text-fill: white");
+        victoryRoyal.setStyle("-fx-text-fill: white");
+        nom2.setStyle("-fx-text-fill: white");
+        PDV2.setStyle("-fx-text-fill: white");
+        vie2.setStyle("-fx-text-fill: white");
+        Mp2.setStyle("-fx-text-fill: white");
+        vitDonnee2.setStyle("-fx-text-fill: white");
+        angleDonnee2.setStyle("-fx-text-fill: white");
+        victoryRoyal1.setStyle("-fx-text-fill: white");
+        volume.setStyle("-fx-text-fill: red");
+        gravite=-10;
+    }
+    private void choixMap(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Choix de la zone de combat");
+        alert.setHeaderText("La gravité variera selon la zone de combat");
+        alert.setContentText("Choisissez votre zone de combat.");
+
+        ButtonType buttonTypeTerre = new ButtonType("Terre");
+        ButtonType buttonTypeLune = new ButtonType("Lune");
+
+        alert.getButtonTypes().setAll(buttonTypeTerre, buttonTypeLune);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeTerre){
+            setColorTerreGrav();
+        } else if (result.get() == buttonTypeLune) {
+            setColorLuneGrav();
+        }
+        changerMap=false;
+    }
+    private void nomJ1J2(){
+        TextInputDialog tID = new TextInputDialog("Nom joueur 1");
+        tID.setTitle("Joueur 1");
+        tID.setHeaderText("Veuillez entrer votre nom");
+        tID.setContentText("Votre nom: ");
+        Main.personnage.setNom(tID.showAndWait().get());
+
+        TextInputDialog tID1 = new TextInputDialog("Nom joueur 2");
+        tID1.setTitle("Joueur 2");
+        tID1.setHeaderText("Veuillez entrer votre nom");
+        tID1.setContentText("Votre nom: ");
+        Main.personnage1.setNom(tID1.showAndWait().get());
+
+        nom1.setText(Main.personnage.getNom());
+        nom2.setText(Main.personnage1.getNom());
+    }
+    private void setPerso(){
+        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("samourai_David.png").toExternalForm());
+        Main.personnage1.setApparence(image2);
+        ImageView imageView1 = new ImageView(Main.personnage1.getApparence());
+        Main.personnage1.setApparenceVue(imageView1);
+        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
+        Main.personnage.setApparence(image1);
+        ImageView imageView = new ImageView(Main.personnage.getApparence());
+        Main.personnage.setApparenceVue(imageView);
+        bPane.getChildren().add(rectanglePerso1);
+        bPane.getChildren().add(rectanglePerso2);
+        bpPerso.setRight(Main.personnage1.getApparenceVue());
+        bpPerso.setLeft(Main.personnage.getApparenceVue());
+        bpPerso.getRight().setTranslateX(-45);
+        Main.personnage1.setPosition(-45);
+        Main.personnage.setPosition(bpPerso.getLeft().getTranslateX());
+    }
+    private void setElemBg(){
+        imageStart.setVisible(false);
+        imageZAZOU.setVisible(false);
+        imageFin.setVisible(false);
+        imageFin.setFitHeight(1100);
+        imageFin.setFitWidth(1900);
+
+        imageBackground.setFitHeight(1100);
+        imageBackground.setFitWidth(1900);
+        imageBackground.setVisible(true);
+
+        ball.setVisible(false);
+        Main.personnage.setVie(100);
+        Main.personnage1.setVie(100);
+        PDV1.setText("100/100");
+        PDV2.setText("100/100");
+        viePerso.setProgress(1);
+        viePerso1.setProgress(1);
+
+        bpPerso.getLeft().setScaleX(0.2);
+        bpPerso.getLeft().setScaleY(0.2);
+        bpPerso.getLeft().setTranslateY(563);
+
+        bpPerso.getRight().setScaleX(0.4);
+        bpPerso.getRight().setScaleY(0.4);
+        bpPerso.getRight().setTranslateY(680);
+        bpPerso.setVisible(true);
+
+
+        labWin.setVisible(false);
+        nope.setVisible(false);
+        yeah.setVisible(false);
+        butChangerMap.setVisible(false);
+        butDemarrage.setVisible(false);
+        vb1.setVisible(true);
+        vb1.setTranslateY(75);
+        vb2.setVisible(true);
+        vb2.setTranslateY(75);
+        vb3.setVisible(true);
+        seeya.setVisible(false);
+        instruction.setVisible(false);
+        victoryRoyal.setText("Victoire(s): "+nbeVictoire);
+        victoryRoyal1.setText("Victoire(s): "+nbeVictoire1);
+
+        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResource("caillou.png").toExternalForm());
+        ball.setFill(new ImagePattern(image3));
+
+        rectanglePerso1.setOpacity(0);
+        rectanglePerso2.setOpacity(0);
+    }
+    private void setJ1Anim(){
+        javafx.scene.image.Image imageAnime = new javafx.scene.image.Image(getClass().getResource("perso1animationMarcher.gif").toExternalForm());
+        Main.personnage.setApparence(imageAnime);
+        ImageView imageview = new ImageView(Main.personnage.getApparence());
+        Main.personnage.setApparenceVue(imageview);
+        bpPerso.setLeft(Main.personnage.getApparenceVue());
+        bpPerso.getLeft().setScaleX(0.2);
+        bpPerso.getLeft().setScaleY(0.2);
+        bpPerso.getLeft().setTranslateY(563);
+        bpPerso.getLeft().setTranslateX(Main.personnage.getPosition());
+        animation=true;
+    }
+    private void setJ2Anim(Personnage personne){
+        javafx.scene.image.Image imageAnime1 = new javafx.scene.image.Image(getClass().getResource("samouraiMarchant.gif").toExternalForm());
+        Main.personnage1.setApparence(imageAnime1);
+        ImageView imageview1 = new ImageView(Main.personnage1.getApparence());
+        personne.setApparenceVue(imageview1);
+        bpPerso.setRight(Main.personnage1.getApparenceVue());
+        bpPerso.getRight().setScaleX(0.4);
+        bpPerso.getRight().setScaleY(0.4);
+        bpPerso.getRight().setTranslateY(680);
+        bpPerso.getRight().setTranslateX(Main.personnage1.getPosition());
+        animation=true;
+    }
+    private void setJ1Static(){
+        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResource("perso1PasFini.png").toExternalForm());
+        Main.personnage.setApparence(image1);
+        ImageView imageView3 = new ImageView(Main.personnage.getApparence());
+        Main.personnage.setApparenceVue(imageView3);
+        bpPerso.setLeft(Main.personnage.getApparenceVue());
+        bpPerso.getLeft().setScaleX(0.2);
+        bpPerso.getLeft().setScaleY(0.2);
+        bpPerso.getLeft().setTranslateY(563);
+        bpPerso.getLeft().setTranslateX(Main.personnage.getPosition());
+    }
+    private void setJ2Static(){
+        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResource("samourai_David.png").toExternalForm());
+        Main.personnage1.setApparence(image2);
+        ImageView imageView4 = new ImageView(Main.personnage1.getApparence());
+        Main.personnage1.setApparenceVue(imageView4);
+        bpPerso.setRight(Main.personnage1.getApparenceVue());
+        bpPerso.getRight().setScaleX(0.4);
+        bpPerso.getRight().setScaleY(0.4);
+        bpPerso.getRight().setTranslateY(680);
+        bpPerso.getRight().setTranslateX(Main.personnage1.getPosition());
+    }
+    private void deplacementGauche(Personnage personne){
+        if (Main.tour ==0){
+            if (personne.getPosition()>= -250){
+                personne.setPosition(personne.getPosition()-5);
+                bPane.getChildren().get(4).setTranslateX(bPane.getChildren().get(4).getTranslateX()-5);
+                bpPerso.getLeft().setTranslateX(personne.getPosition());
+            }
+        }
+        if (Main.tour==1){
+            if (personne.getPosition()>=-410){
+                personne.setPosition(personne.getPosition()-5);
+                bPane.getChildren().get(5).setTranslateX(bPane.getChildren().get(5).getTranslateX()-5);
+                bpPerso.getRight().setTranslateX(personne.getPosition());
+            }
+        }
+    }
+    private void deplacementDroite(Personnage personne){
+        if (Main.tour==0){
+            if (personne.getPosition()<=310){
+                personne.setPosition(personne.getPosition()+5);
+                bPane.getChildren().get(4).setTranslateX(bPane.getChildren().get(4).getTranslateX()+5);
+                bpPerso.getLeft().setTranslateX(personne.getPosition());
+            }
+        }
+        if (Main.tour==1){
+            if (personne.getPosition()<=145){
+                personne.setPosition(personne.getPosition()+5);
+                bPane.getChildren().get(5).setTranslateX(bPane.getChildren().get(5).getTranslateX()+5);
+                bpPerso.getRight().setTranslateX(personne.getPosition());
+            }
+        }
+    }
+    private void bigCalcul(int [] counter, SimpleDoubleProperty stepX, SimpleDoubleProperty stepY,SimpleDoubleProperty posX, SimpleDoubleProperty posY , SimpleDoubleProperty lastPosX, SimpleDoubleProperty lastPosY, double vitesseX, double vitesseYIni, AtomicInteger leftRight){
+        ball.rotateProperty().setValue(ball.getRotate()+0.2*leftRight.get());
+        posX.set(vitesseX*(counter[0]*0.004));
+        posY.set((vitesseYIni*(counter[0]*0.004))+((gravite*(counter[0]*0.004)*(counter[0]*0.004))/2));
+        stepX.set((posX.get()- lastPosX.get()));
+        stepY.set(posY.get()-lastPosY.get());
+        lastPosX.set(posX.get());
+        lastPosY.set(posY.get());
+        ball.setTranslateX(ball.getCenterX()+leftRight.get()*(stepX.get()));
+        ball.setCenterX(ball.getCenterX()+leftRight.get()*(stepX.get()));
+        ball.setTranslateY(ball.getCenterY()-(stepY.get()));
+        ball.setCenterY(ball.getCenterY()-(stepY.get()));
+        counter[0]++;
+    }
+    private void setBallJ1(AtomicInteger leftRight){
+        ball.setRadius(masseProjectile.getValue());
+        ball.setCenterX(bpPerso.getLeft().getTranslateX()-325);
+        ball.setCenterY(bpPerso.getLeft().getTranslateY()-730);
+        leftRight.set(1);
+    }
+    private void setBallJ2(AtomicInteger leftRight){
+        ball.setRadius(masseProjectile1.getValue());
+        ball.setCenterX(bpPerso.getRight().getTranslateX()+1100);
+        ball.setCenterY(bpPerso.getRight().getTranslateY()-845);
+        leftRight.set(-1);
+    }
+    private void perso1Dead(){
+        bpPerso.setVisible(false);
+        imageBackground.setVisible(false);
+        vb1.setVisible(false);
+        vb2.setVisible(false);
+        vb3.setVisible(false);
+        butFDT.setVisible(false);
+        nope.setVisible(true);
+        yeah.setVisible(true);
+        butChangerMap.setVisible(true);
+        labWin.setVisible(true);
+        labWin.setText(Main.personnage.getNom()+ " a gagné!!");
+        nbeVictoire=nbeVictoire+1;
+        imageFin.setVisible(true);
+        finDeTour();
+    }
+    private void persoDead(){
+        bpPerso.setVisible(false);
+        imageBackground.setVisible(false);
+        vb1.setVisible(false);
+        vb2.setVisible(false);
+        vb3.setVisible(false);
+        butFDT.setVisible(false);
+        nope.setVisible(true);
+        yeah.setVisible(true);
+        butChangerMap.setVisible(true);
+        labWin.setVisible(true);
+        labWin.setText(Main.personnage1.getNom()+ " a gagné!!");
+        nbeVictoire1=nbeVictoire1+1;
+        imageFin.setVisible(true);
+        finDeTour();
+    }
 }
